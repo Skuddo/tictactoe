@@ -39,12 +39,35 @@ void GUI::initGame(Board& board,int mode, int diff){
     std::string gamemode = (mode == 0) ? "Singleplayer" : "Multiplayer";
     
     board.initBoard();
-    board.drawBoard();
+    drawBoard(board);
     mvprintw(2, 4, "Tic-Tac-Toe");
     mvprintw(4, 4, "%s", gamemode.c_str());
     if (mode == 1){
         std::string difficulty = (diff == 1) ? "Easy mode" : "Hard mode";
         mvprintw(5, 4, "%s", difficulty.c_str());
+    }
+    wrefresh(stdscr);
+}
+
+void GUI::drawBoard(Board& board) {
+    clear();
+    int size = board.getSize();
+    int startX = (COLS - ((size - 1) * 4) - 1) / 2;
+    int startY = (LINES / 2) - (size *2)/2;
+
+    for (int i = 0; i < size; i++) {
+        for (int j = 0; j < size; j++) {
+            mvaddch(startY + (2 * i), startX + (4 * j), board.getCell(i,j));
+            if (j < size - 1) {
+                mvaddch(startY + (2 * i), startX + (4 * j) + 2, '|');
+            }
+        }
+        if (i < size - 1) {
+            mvprintw(startY + (2 * i) + 1, startX-1, "---");
+            for (int k = 1; k < size; k++) {
+                mvprintw(startY + (2 * i) + 1, startX + 4 * k - 2, "+---");
+            }
+        }
     }
     wrefresh(stdscr);
 }
@@ -123,7 +146,7 @@ void GUI::playerMove(Board& board, int &row, int &col, char player){
             default:
                 break;
         }
-        board.drawBoard();
+        drawBoard(board);
         int startX = (COLS - (size * 4) - 1) / 2;
         int startY = (LINES / 2) - (size *2) /2 ;
         mvaddch(startY + (2 * row) - 1, startX + (4 * col), player | A_REVERSE);

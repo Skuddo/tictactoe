@@ -12,6 +12,7 @@ public:
     GUI();
     ~GUI();
     void initGame(Board& board, int mode, int diff);
+    void drawBoard(Board& board);
     void playerMove(Board& board, int &row, int &col, char player);
     int navigateMenu(const std::vector<std::string>& options, int menuType);
     char getCustomChar(int player, char& prevSymbol);

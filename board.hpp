@@ -13,9 +13,7 @@ private:
 public:
     Board(int size = 3, const std::array<char, 2>& players = {'X', 'O'});
     void initBoard();
-    void drawBoard();
     void setCell(int row, int col, char mark);
-    void setCustomPlayer(int p);
     bool checkWin(char p);
     bool checkDraw();
     bool isCellEmpty(int row, int col);
